@@ -1,6 +1,6 @@
 extern crate proc_macro;
 
-use proc_macro::{Literal, TokenStream, TokenTree};
+use proc_macro::TokenStream;
 use std::collections::HashMap;
 
 use naga::FastHashMap;
@@ -20,7 +20,7 @@ mod wgsl;
 
 #[derive(Deserialize)]
 struct Transpile<'a> {
-    entry_point: Option<&'a str>,
+    _entry_point: Option<&'a str>,
     stage: &'a str,
     source: &'a str,
     from: &'a str,
@@ -78,42 +78,41 @@ pub fn transpile(input: TokenStream) -> TokenStream {
 
     let stage = util::parse_stage(input.stage);
 
-    let from = util::parse_from(
+    #[allow(clippy::redundant_closure)]
+    let _from = util::parse_from(
         input.source,
-        input.from,
         stage,
-        input
-            .defines
-            .map_or(None, |some| Some(FastHashMap::from_iter(some.into_iter()))),
+        input.defines.map(|some| FastHashMap::from_iter(some)),
+        input.from,
     );
 
     match input.to {
         #[cfg(feature = "to-hlsl")]
-        "hlsl" => TokenStream::from(TokenTree::Literal(Literal::string(
-            hlsl::to_hlsl(from).as_str(),
+        "hlsl" => TokenStream::from(proc_macro::TokenTree::Literal(proc_macro::Literal::string(
+            hlsl::to_hlsl(_from).as_str(),
         ))),
 
         #[cfg(feature = "to-wgsl")]
-        "wgsl" => TokenStream::from(TokenTree::Literal(Literal::string(
-            wgsl::to_wgsl(from).as_str(),
+        "wgsl" => TokenStream::from(proc_macro::TokenTree::Literal(proc_macro::Literal::string(
+            wgsl::to_wgsl(_from).as_str(),
         ))),
 
         #[cfg(feature = "to-spv")]
-        "spv" => format!("{:?}", spv::to_spv(from)).parse().unwrap(),
+        "spv" => format!("{:?}", spv::to_spv(_from)).parse().unwrap(),
 
         #[cfg(feature = "to-glsl")]
-        "glsl" => TokenStream::from(TokenTree::Literal(Literal::string(
+        "glsl" => TokenStream::from(proc_macro::TokenTree::Literal(proc_macro::Literal::string(
             glsl::to_glsl(
-                from,
+                _from,
                 stage,
-                input.entry_point.expect("GLSL requires an entry point"),
+                input._entry_point.expect("GLSL requires an entry point"),
             )
             .as_str(),
         ))),
 
         #[cfg(feature = "to-msl")]
-        "msl" => TokenStream::from(TokenTree::Literal(Literal::string(
-            msl::to_msl(from).as_str(),
+        "msl" => TokenStream::from(proc_macro::TokenTree::Literal(proc_macro::Literal::string(
+            msl::to_msl(_from).as_str(),
         ))),
 
         _ => panic!("Unsupported output language: {}", input.to),

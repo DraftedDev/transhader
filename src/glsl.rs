@@ -1,6 +1,6 @@
-use naga::{Module, ShaderStage};
 use naga::back::glsl::{Options, PipelineOptions, Writer};
 use naga::proc::BoundsCheckPolicies;
+use naga::{Module, ShaderStage};
 
 use crate::util::validate;
 

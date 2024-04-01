@@ -1,6 +1,7 @@
-use naga::{FastHashMap, front, Module, ShaderStage};
 use naga::valid::{Capabilities, ModuleInfo, ValidationFlags, Validator};
+use naga::{FastHashMap, Module, ShaderStage};
 
+#[allow(dead_code)]
 pub(crate) fn validate(module: &Module) -> ModuleInfo {
     Validator::new(
         ValidationFlags::default(), // TODO: custom validation flags
@@ -10,43 +11,48 @@ pub(crate) fn validate(module: &Module) -> ModuleInfo {
     .expect("Failed to validate module")
 }
 
-pub(crate) fn parse_stage(input: &str) -> ShaderStage {
-    match input {
+pub(crate) fn parse_stage(_input: &str) -> ShaderStage {
+    match _input {
         "vertex" => ShaderStage::Vertex,
         "fragment" => ShaderStage::Fragment,
         "compute" => ShaderStage::Compute,
-        _ => panic!("Invalid shader stage: {}", input),
+        _ => panic!("Invalid shader stage: {}", _input),
     }
 }
 
 pub(crate) fn parse_from(
-    input: &str,
+    _input: &str,
+    _stage: ShaderStage,
+    _defines: Option<FastHashMap<String, String>>,
     lang: &str,
-    stage: ShaderStage,
-    defines: Option<FastHashMap<String, String>>,
 ) -> Module {
     match lang {
         #[cfg(feature = "from-glsl")]
-        "glsl" => front::glsl::Frontend::default()
+        "glsl" => naga::front::glsl::Frontend::default()
             .parse(
-                &if let Some(defines) = defines {
-                    front::glsl::Options { stage, defines }
+                &if let Some(defines) = _defines {
+                    naga::front::glsl::Options {
+                        stage: _stage,
+                        defines,
+                    }
                 } else {
-                    front::glsl::Options::from(stage)
+                    naga::front::glsl::Options::from(_stage)
                 },
-                input,
+                _input,
             )
             .expect("Failed to parse input as GLSL Module"),
 
         #[cfg(feature = "from-spv")]
-        "spv" => front::spv::parse_u8_slice(
-            input.as_bytes(),
-            &front::spv::Options::default(), // TODO: custom options
+        "spv" => naga::front::spv::parse_u8_slice(
+            _input.as_bytes(),
+            &naga::front::spv::Options::default(), // TODO: custom options
         )
         .expect("Failed to parse input as SPIR-V Module"),
 
         #[cfg(feature = "from-wgsl")]
-        "wgsl" => front::wgsl::parse_str(input).expect("Failed to parse input as WGSL Module"),
+        "wgsl" => {
+            naga::front::wgsl::parse_str(_input).expect("Failed to parse input as WGSL Module")
+        }
 
         _ => panic!("Unsupported shader language: {:?}", lang),
     }

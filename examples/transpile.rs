@@ -1,4 +1,3 @@
-
 fn main() {
     #[cfg(all(feature = "from-glsl", feature = "to-hlsl"))]
     {
