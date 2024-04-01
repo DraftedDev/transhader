@@ -7,6 +7,8 @@ authors = ["Mikail Plotzky"]
 license = "MIT OR Apache-2.0"
 keywords = ["naga", "shaders", "proc-macro", "hlsl", "glsl"]
 categories = ["compilers", "graphics", "rendering::data-formats"]
+repository = "https://github.com/drafteddev/transhader"
+documentation = "https://docs.rs/transhader"
 
 [dependencies]
 ron = "0.8"
