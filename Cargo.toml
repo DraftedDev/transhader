@@ -1,0 +1,42 @@
+[package]
+name = "transhader"
+version = "0.1.0"
+edition = "2021"
+description = "Transpile shaders on the fly using procedural macros."
+authors = ["Mikail Plotzky"]
+license = "MIT OR Apache-2.0"
+keywords = ["naga", "shaders", "proc-macro", "hlsl", "glsl"]
+categories = ["compilers", "graphics", "rendering::data-formats"]
+
+[dependencies]
+ron = "0.8"
+serde = { version = "1", features = ["derive"] }
+naga = "0.19.2"
+
+[features]
+default = []
+
+# Allow transpiling from GLSL.
+from-glsl = ["naga/glsl-in"]
+# Allow transpiling from SPIR-V.
+from-spv = ["naga/spv-in"]
+# Allow transpiling from WGSL.
+from-wgsl = ["naga/wgsl-in"]
+
+# Allow transpiling to GLSL.
+to-glsl = ["naga/glsl-out"]
+# Allow transpiling to MSL.
+to-msl = ["naga/msl-out"]
+# Allow transpiling to SPIR-V.
+to-spv = ["naga/spv-out"]
+# Allow transpiling to WGSL.
+to-wgsl = ["naga/wgsl-out"]
+# Allow transpiling to HLSL.
+to-hlsl = ["naga/hlsl-out"]
+
+[lib]
+proc-macro = true
+
+[[example]]
+name = "transpile"
+path = "examples/transpile.rs"
