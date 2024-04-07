@@ -11,8 +11,8 @@ repository = "https://github.com/drafteddev/transhader"
 documentation = "https://docs.rs/transhader"
 
 [dependencies]
-ron = "0.8"
-serde = { version = "1", features = ["derive"] }
+ron = "0.8.1"
+serde = { version = "1.0.197", features = ["derive"] }
 naga = "0.19.2"
 
 [features]
