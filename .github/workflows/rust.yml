@@ -23,4 +23,4 @@ jobs:
     - name: Run transpile example
       run: cargo run --example transpile --all-features --verbose
     - name: Run transpile-file example
-      run: cargo run --example transpile-file --all-features --verbose
+      run: cargo run --example transpile_file --all-features --verbose
