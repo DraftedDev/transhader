@@ -6,6 +6,25 @@
 
 **Transpile shaders from one language to another using procedural macros.**
 
+## Features
+
+**Functionality is split into different modules which allow you to transpile from/to any supported language.
+The `default` feature already includes all of them.**
+
+### Supported Frontend Languages
+
+- **`from-glsl` - Transpile OpenGL Shading Language (GLSL) Shaders.**
+- **`from-spv` - Transpile Standard Portable Intermediate Representation for Vulkan (SPIR-V) Shaders.**
+- **`from-wgsl` - Transpile Web GPU Shader Language (WGSL) Shaders.**
+
+### Supported Backend Languages
+
+- **`to-glsl` - Transpile shaders to OpenGL Shading Language (GLSL) Shaders.**
+- **`to-msl` - Transpile shaders to Metal Shading Language (MSL) Shaders.**
+- **`to-spv` - Transpile shaders to Standard Portable Intermediate Representation for Vulkan (SPIR-V) Shaders.**
+- **`to-wgsl` - Transpile shaders to Web GPU Shader Language (WGSL) Shaders.**
+- **`to-hlsl` - Transpile shaders to High Level Shader Language (HLSL) Shaders.**
+
 ## Why?
 
 Some Multi-Backend Graphics APIs (like bgfx) require shaders for every backend (GLSL for OpenGL; HLSL for D3D; MSL for Metal; SPIR-V for Vulkan; WGSL for WebGPU). You can either try to transpile your shaders using `naga` during Runtime (which would affect performance) or transpile each shader using a `build.rs` script.
@@ -21,19 +40,6 @@ Transhader uses [naga](https://github.com/gfx-rs/wgpu/tree/trunk/naga) and Rust'
 - Limited shader language support.
 - Longer compile-times, since shaders are transpiled using procedural macros.
 - Less customization of transpiler options (though I am working on it).
-
-## Features
-
-- **`from-glsl` - Transpile OpenGL Shading Language (GLSL) Shaders.**
-- **`from-spv` - Transpile Standard Portable Intermediate Representation for Vulkan (SPIR-V) Shaders.**
-- **`from-wgsl` - Transpile Web GPU Shader Language (WGSL) Shaders.**
-
-
-- **`to-glsl` - Transpile shaders to OpenGL Shading Language (GLSL) Shaders.**
-- **`to-msl` - Transpile shaders to Metal Shading Language (MSL) Shaders.**
-- **`to-spv` - Transpile shaders to Standard Portable Intermediate Representation for Vulkan (SPIR-V) Shaders.**
-- **`to-wgsl` - Transpile shaders to Web GPU Shader Language (WGSL) Shaders.**
-- **`to-hlsl` - Transpile shaders to High Level Shader Language (HLSL) Shaders.**
 
 ## License
 
