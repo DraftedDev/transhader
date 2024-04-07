@@ -16,7 +16,16 @@ serde = { version = "1", features = ["derive"] }
 naga = "0.19.2"
 
 [features]
-default = []
+default = [
+    "from-glsl",
+    "from-spv",
+    "from-wgsl",
+    "to-glsl",
+    "to-hlsl",
+    "to-msl",
+    "to-spv",
+    "to-wgsl",
+]
 
 # Allow transpiling from GLSL.
 from-glsl = ["naga/glsl-in"]
