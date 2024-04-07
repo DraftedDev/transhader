@@ -1,6 +1,6 @@
 [package]
 name = "transhader"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 description = "Transpile shaders on the fly using procedural macros."
 authors = ["Mikail Plotzky"]
