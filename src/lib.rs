@@ -141,19 +141,6 @@ pub fn transpile(input: TokenStream) -> TokenStream {
 /// - `to` - Target language to transpile to.
 /// - `defines` - Defines to pass to the transpiler. Only required for certain languages and shaders.
 ///
-/// ## Example
-///
-/// ```
-/// #[cfg(any(feature = "from-glsl", feature = "to-hlsl"))]
-/// transhader::transpile!(
-///     stage: "vertex",
-///     source: "my_shader.glsl",
-///     from: "glsl",
-///     to: "hlsl",
-///     defines: None,
-///     entry_point: None,
-///  );
-/// ```
 #[proc_macro]
 pub fn transpile_file(input: TokenStream) -> TokenStream {
     let mut input = input.to_string();
