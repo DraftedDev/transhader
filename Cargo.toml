@@ -51,3 +51,7 @@ proc-macro = true
 [[example]]
 name = "transpile"
 path = "examples/transpile.rs"
+
+[[example]]
+name = "transpile_file"
+path = "examples/transpile_file.rs"
